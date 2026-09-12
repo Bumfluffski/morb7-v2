@@ -66,12 +66,14 @@ ScrollTrigger.create({trigger:'main',start:'top top',end:()=>document.querySelec
 document.querySelectorAll('.beat[data-i]').forEach(s=>{gsap.to(s.querySelector('.box'),{opacity:0,ease:'none',scrollTrigger:{trigger:s,start:'bottom 80%',end:'bottom 45%',scrub:true}});
  gsap.timeline({scrollTrigger:{trigger:s,start:'top 60%',toggleActions:'play none none reverse'}}).to(s.querySelector('.k'),{opacity:1,duration:.5},0).to(s.querySelectorAll('h2 .l i'),{y:0,duration:1,stagger:.09,ease:'power4.out'},0).to(s.querySelector('p'),{opacity:1,y:0,duration:.8,ease:'power3.out'},.5)});
 gsap.to('#b0 .box',{opacity:0,ease:'none',scrollTrigger:{trigger:'#b0',start:'bottom 80%',end:'bottom 45%',scrub:true}});
+gsap.to('.hud',{opacity:0,y:20,ease:'none',scrollTrigger:{trigger:'.end',start:'top 90%',end:'top 55%',scrub:true}});
+gsap.to('.hint',{opacity:0,scrollTrigger:{trigger:'main',start:'top top',end:'+=240',scrub:true}});
 /* loader */
 const n={v:0};gsap.timeline({onComplete:()=>document.getElementById('ld').remove()})
  .to('#ldb',{scaleX:1,duration:1.4,ease:'power2.inOut'},0).to(n,{v:16,duration:1.4,ease:'power2.inOut',onUpdate:()=>document.getElementById('ldn').textContent=Math.round(n.v)},0)
  .to('#ld',{yPercent:-100,duration:1,ease:'power4.inOut'},'+=.25')
  .to('#b0 h1 .l i',{y:0,duration:1.1,stagger:.12,ease:'power4.out'},'-=.55')
- .to(['nav','.hud','.ctl'],{opacity:1,duration:.8,stagger:.08},'-=.5');
+ .to(['nav','.hud','.ctl','.hint'],{opacity:1,duration:.8,stagger:.08},'-=.5');
 
 
 }
