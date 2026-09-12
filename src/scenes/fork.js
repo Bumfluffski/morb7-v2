@@ -16,10 +16,10 @@ function dashed(points,mat){const g=new THREE.BufferGeometry();const pts=[];for(
 const V=(x,z)=>new THREE.Vector3(x,0,z);
 const trunk=dashed([V(0,-40),V(0,60)],new THREE.LineBasicMaterial({color:INK,transparent:true,opacity:.5}));scene.add(trunk);
 const leftMat=new THREE.LineBasicMaterial({color:INK,transparent:true,opacity:.5}),rightMat=leftMat.clone();
-const left=dashed([V(0,60),V(-18,110),V(-60,200),V(-110,300)],leftMat),right=dashed([V(0,60),V(18,110),V(60,200),V(110,300)],rightMat);scene.add(left,right);
+const left=dashed([V(0,60),V(18,110),V(60,200),V(110,300)],leftMat),right=dashed([V(0,60),V(-18,110),V(-60,200),V(-110,300)],rightMat);scene.add(left,right);
 /* kerbs */
 function kerb(points,off){const g=new THREE.BufferGeometry();const pts=[];for(let i=0;i<points.length-1;i++){const a=points[i],b=points[i+1];const d=b.clone().sub(a).normalize();const n=new THREE.Vector3(-d.z,0,d.x).multiplyScalar(off);pts.push(a.x+n.x,0,a.z+n.z,b.x+n.x,0,b.z+n.z)}g.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));return new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:INK,transparent:true,opacity:.35}))}
-scene.add(kerb([V(0,-40),V(0,60),V(-18,110),V(-60,200),V(-110,300)],5.5),kerb([V(0,-40),V(0,60),V(18,110),V(60,200),V(110,300)],-5.5),kerb([V(0,60),V(-18,110),V(-60,200),V(-110,300)],-5.5),kerb([V(0,60),V(18,110),V(60,200),V(110,300)],5.5));
+scene.add(kerb([V(0,-40),V(0,60),V(18,110),V(60,200),V(110,300)],5.5),kerb([V(0,-40),V(0,60),V(-18,110),V(-60,200),V(-110,300)],-5.5),kerb([V(0,60),V(18,110),V(60,200),V(110,300)],-5.5),kerb([V(0,60),V(-18,110),V(-60,200),V(-110,300)],5.5));
 /* houses along the trunk and both branches */
 let seed=1989;const R=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
 const houses=[];function house(x,z,rot,side){const w=5+R()*3,d=6+R()*4,h=3+R()*2.2,roof=1.6+R()*1.4;
@@ -31,13 +31,13 @@ const houses=[];function house(x,z,rot,side){const w=5+R()*3,d=6+R()*4,h=3+R()*2
  const grp=new THREE.Group();grp.add(fill,edges);grp.position.set(x,0,z);grp.rotation.y=rot;scene.add(grp);houses.push({grp,fill,edges,side,t:0})}
 for(let i=0;i<(mobile?14:22);i++){const s=i%2?1:-1;house(s*(10+R()*3),-30+(i>>1)*8.5,0,'trunk')}
 function branch(pts,side){for(let i=0;i<pts.length-1;i++){const a=pts[i],b=pts[i+1];const d=b.clone().sub(a);const len=d.length();d.normalize();const n=new THREE.Vector3(-d.z,0,d.x);const rot=Math.atan2(d.x,d.z);for(let k=8;k<len;k+=9){const p=a.clone().add(d.clone().multiplyScalar(k));[1,-1].forEach(sg=>{const q=p.clone().add(n.clone().multiplyScalar(sg*(10+R()*3)));house(q.x,q.z,rot,side)})}}}
-branch([V(0,60),V(-18,110),V(-60,200),V(-110,300)],'L');branch([V(0,60),V(18,110),V(60,200),V(110,300)],'R');
+branch([V(0,60),V(18,110),V(60,200),V(110,300)],'L');branch([V(0,60),V(-18,110),V(-60,200),V(-110,300)],'R');
 /* camera */
 const cam={x:0,y:1.7,z:-30,lx:0,lz:60};let mx=0,my=0,lean=0,chosen=null;addEventListener('pointermove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=(e.clientY/innerHeight-.5)*2});
 const clock=new THREE.Clock();
 function frame(){const t=clock.getElapsedTime();
  // idle creep forward toward the junction, lean toward hovered road
- if(!chosen){cam.z+=(12-cam.z)*.004;const target=lean;cam.lx+=(target*26-cam.lx)*.04}
+ if(!chosen){cam.z+=(12-cam.z)*.004;const target=-lean;cam.lx+=(target*26-cam.lx)*.04}
  camera.position.set(cam.x-(mobile?0:mx*.5),cam.y-my*.2,cam.z);camera.lookAt(cam.lx-mx*4,1.6-my*2,cam.lz);
  houses.forEach(h=>{let target=0;if(h.side==='L'&&lean<-.3)target=.4;if(h.side==='R'&&lean>.3)target=.4;if(chosen&&h.side===chosen)target=.55;h.t+=(target-h.t)*.08;h.fill.material.opacity=h.t;h.edges.material.color.copy(INK).lerp(TQ,Math.min(1,h.t*1.8))});
  leftMat.color.copy(INK).lerp(TQ,lean<-.3||chosen==='L'?1:0);rightMat.color.copy(INK).lerp(TQ,lean>.3||chosen==='R'?1:0);
@@ -47,7 +47,7 @@ addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight);camera.a
 const L=document.getElementById('roadL'),Rr=document.getElementById('roadR');
 L.addEventListener('mouseenter',()=>lean=-1);Rr.addEventListener('mouseenter',()=>lean=1);[L,Rr].forEach(el=>el.addEventListener('mouseleave',()=>lean=0));
 function choose(side,href){return e=>{e.preventDefault();if(chosen)return;chosen=side;document.cookie=`morb7_journey=${side==='L'?'buying':'selling'};path=/;max-age=${60*60*24*90}`;
- const dir=side==='L'?-1:1;
+ const dir=side==='L'?1:-1;
  gsap.timeline({onComplete:()=>location.href=href})
   .to(cam,{z:60,duration:1.6,ease:'power2.in'},0).to(cam,{lx:dir*18,lz:110,duration:1.6,ease:'power2.inOut'},0)
   .to(cam,{x:dir*18,z:110,lx:dir*60,lz:200,duration:1.4,ease:'power2.in'},1.4)
