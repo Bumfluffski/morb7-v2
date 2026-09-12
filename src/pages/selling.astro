@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 <Base title="Sixteen Saturdays — selling with Spencer Morby" description="Set the asking price and watch who stops. What Spencer Morby tells sellers in Randpark Ridge, Weltevreden Park and Sundowner." journey="selling">
 <canvas id="gl"></canvas><div class="grain"></div>
 <div id="ld"><div><div class="n" id="ldn">0</div><div class="s">Saturdays</div></div><div class="bar" id="ldb"></div></div>
+<div class="hint"><span>Scroll for what I tell sellers</span><i></i></div>
 <div class="hud"><div class="sat" id="sat">1</div><div class="lab">of sixteen Saturdays</div><div class="row"><span>Drove past</span><b id="passed">0</b><span>Stopped to look</span><b id="stopped">0</b><span>Made an offer</span><b id="offers">0</b></div></div>
 
 <main>
@@ -26,6 +27,10 @@ import Base from '../layouts/Base.astro';
 </script>
 </Base>
 <style is:global>
+.hint{position:fixed;left:50%;bottom:1.6rem;transform:translateX(-50%);z-index:30;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;pointer-events:none}
+.hint i{width:1px;height:2.2rem;background:var(--ink);display:block;transform-origin:top;animation:hint 1.8s cubic-bezier(.7,0,.2,1) infinite}
+@keyframes hint{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media(max-height:820px){#b0 h1{font-size:clamp(2.6rem,5.4vw,5rem)}}
 
 .mono{font-family:"IBM Plex Mono",monospace;font-weight:500;font-variant-numeric:tabular-nums}
 #gl{position:fixed;inset:0;z-index:0}
@@ -45,7 +50,7 @@ nav .cta{background:var(--ink);color:var(--bg);padding:.7rem 1.1rem;border-radiu
 .hud .row b{font-family:"IBM Plex Mono",monospace;font-weight:500;color:var(--ink)}
 main{position:relative;z-index:1}
 .beat{height:140vh;position:relative;pointer-events:none}
-.beat .box{position:sticky;top:20vh;margin-left:2rem;max-width:36rem;padding:2rem 2.4rem 2rem 0;background:radial-gradient(120% 100% at 0% 100%,rgba(238,240,239,.96) 55%,rgba(238,240,239,0) 100%)}
+.beat .box{position:sticky;top:16vh;margin-left:2rem;max-width:36rem;padding:2rem 2.4rem 2rem 0;background:radial-gradient(120% 100% at 0% 100%,rgba(238,240,239,.96) 55%,rgba(238,240,239,0) 100%)}
 .beat h2{font-size:clamp(2.2rem,4.8vw,5.2rem);line-height:.95;letter-spacing:-.035em;font-weight:500;text-wrap:balance}
 .beat h2 .l{display:block;overflow:hidden}.beat h2 .l i{display:block;font-style:normal;transform:translateY(105%)}
 .beat h2 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq-d);letter-spacing:-.01em}
@@ -53,8 +58,9 @@ main{position:relative;z-index:1}
 .beat .k{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tq-d);margin-bottom:1rem;opacity:0}
 /* the parked scene: hero + price control */
 #b0{height:220vh}
-#b0 .box{pointer-events:auto;max-width:40rem}
-#b0 h1{font-size:clamp(3rem,8.5vw,9rem);line-height:.88;letter-spacing:-.045em;font-weight:500}
+#b0 .box{pointer-events:auto;max-width:40rem;top:10vh}
+.ctl{margin-top:1.4rem}
+#b0 h1{font-size:clamp(2.8rem,6.6vw,6.8rem);line-height:.88;letter-spacing:-.045em;font-weight:500}
 #b0 h1 .l{display:block;overflow:hidden}#b0 h1 .l i{display:block;font-style:normal;transform:translateY(105%)}
 #b0 h1 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq-d);letter-spacing:-.01em}
 .ctl{margin-top:2rem;max-width:30rem;opacity:0}
@@ -62,7 +68,7 @@ main{position:relative;z-index:1}
 .ctl input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:var(--ink);outline:0}
 .ctl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--tq);border:2px solid var(--ink);cursor:grab}
 .ctl .ends{display:flex;justify-content:space-between;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:.6rem}
-.ctl .say{margin-top:1.4rem;font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:1.5rem;line-height:1.25;color:var(--ink);min-height:3.8em}
+.ctl .say{margin-top:1rem;font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:1.5rem;line-height:1.25;color:var(--ink);min-height:3.8em}
 .end{min-height:100vh;display:grid;place-items:center;background:var(--ink);color:var(--bg);text-align:center;padding:6rem 2rem;position:relative}
 .end h2{font-size:clamp(3rem,8.5vw,9.5rem);line-height:.88;letter-spacing:-.045em;font-weight:500}
 .end h2 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq)}
