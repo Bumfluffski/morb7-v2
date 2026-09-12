@@ -1,0 +1,26 @@
+---
+interface Props { title: string; description: string; journey?: "buying"|"selling"|null; fixedNav?: boolean; schema?: object }
+const { title, description, journey = null, fixedNav = true, schema } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+import "../styles/base.css";
+---
+<!doctype html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{title}</title>
+<meta name="description" content={description}>
+<link rel="canonical" href={canonical}>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+{schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+</head>
+<body>
+<nav class="nav" style={fixedNav ? "" : "position:static;padding-inline:0"}>
+  <a href="/">Spencer Morby · Morb7</a>
+  <div class="r"><a href="/streets/randpark-ridge">The suburbs</a><a href="/about">About</a><a href="/writing">Writing</a></div>
+  <div class="tog"><a class={journey==="buying"?"on":""} href="/buying">Buying</a><a class={journey==="selling"?"on":""} href="/selling">Selling</a></div>
+</nav>
+<slot />
+</body>
+</html>

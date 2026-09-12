@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Sixteen Saturdays — selling with Spencer Morby" description="Set the asking price and watch who stops. What Spencer Morby tells sellers in Randpark Ridge, Weltevreden Park and Sundowner." journey="selling">
+<canvas id="gl"></canvas><div class="grain"></div>
+<div id="ld"><div><div class="n" id="ldn">0</div><div class="s">Saturdays</div></div><div class="bar" id="ldb"></div></div>
+<div class="hud"><div class="sat" id="sat">1</div><div class="lab">of sixteen Saturdays</div><div class="row"><span>Drove past</span><b id="passed">0</b><span>Stopped to look</span><b id="stopped">0</b><span>Made an offer</span><b id="offers">0</b></div></div>
+
+<main>
+  <section class="beat" id="b0"><div class="box">
+    <h1><span class="l"><i>Park outside</i></span><span class="l"><i><em>your</em> house.</i></span></h1>
+    <div class="ctl"><p class="q">Every house gets sixteen Saturdays of real attention. Set the asking price and watch who stops.</p>
+      <input id="price" type="range" min="0" max="100" value="0" aria-label="Asking price, from the honest number to the number you hoped for"><div class="ends"><span>The honest number</span><span>The number you hoped for</span></div>
+      <p class="say" id="say">Priced where a buyer will actually pay, the people who were waiting come in the first three weeks. One of them makes an offer.</p></div>
+  </div></section>
+  <section class="beat" data-i="1"><div class="box"><div class="k">One</div><h2><span class="l"><i>Get two other</i></span><span class="l"><i><em>valuations.</em></i></span></h2><p>Then ask all three of us why the numbers differ. The agent who can explain the difference is the one to trust. Sometimes that is not me, and I will say so.</p></div></section>
+  <section class="beat" data-i="2"><div class="box"><div class="k">Two</div><h2><span class="l"><i>The market does not</i></span><span class="l"><i>care what <em>you</em> paid.</i></span></h2><p>Or what your neighbour got in 2021. Or what you need to clear the bond. It cares what a buyer will pay this month. I will tell you that number even when you want a bigger one.</p></div></section>
+  <section class="beat" data-i="3"><div class="box"><div class="k">Three</div><h2><span class="l"><i>The high number</i></span><span class="l"><i>is a <em>trap.</em></i></span></h2><p>Agents win listings by quoting high. Six weeks later you drop the price, and every buyer who watched you do it now knows you will do it again. The street sells around you.</p></div></section>
+  <section class="beat" data-i="4"><div class="box"><div class="k">Four</div><h2><span class="l"><i>This might not be</i></span><span class="l"><i>the <em>year</em> to sell.</i></span></h2><p>If waiting six months makes you money, I will tell you to wait. I have done this long enough that I do not need this listing. I need you to come back.</p></div></section>
+  <section class="end"><div><h2>Before you list,<br><em>talk to me.</em></h2><a class="btn" href="#"><i></i>Get my honest number</a></div><div class="f"><span>Morb7 Realtors · Spencer Morby</span><span>Seller slice · v0.1</span></div></section>
+</main>
+
+<script>
+  import { mount } from '../scenes/selling.js';
+  mount();
+</script>
+</Base>
+<style is:global>
+
+.mono{font-family:"IBM Plex Mono",monospace;font-weight:500;font-variant-numeric:tabular-nums}
+#gl{position:fixed;inset:0;z-index:0}
+#ld{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center}
+#ld .n{font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:clamp(5rem,16vw,14rem);line-height:.9;color:var(--tq-d);letter-spacing:-.04em;text-align:center}
+#ld .s{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-top:1.2rem;text-align:center}
+#ld .bar{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--tq);transform:scaleX(0);transform-origin:left}
+nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2rem;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;opacity:0}
+nav .tog{display:flex;border:1px solid var(--ink);border-radius:99px;overflow:hidden}
+nav .tog span{padding:.5rem .9rem}nav .tog .on{background:var(--ink);color:var(--bg)}
+nav .cta{background:var(--ink);color:var(--bg);padding:.7rem 1.1rem;border-radius:99px}
+/* HUD: Saturday counter */
+.hud{position:fixed;right:2rem;top:50%;transform:translateY(-50%);z-index:30;text-align:right;opacity:0;padding:1.4rem 0 1.4rem 3rem;background:radial-gradient(120% 100% at 100% 50%,rgba(238,240,239,.95) 50%,rgba(238,240,239,0) 100%)}
+.hud .sat{font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:clamp(3rem,7vw,7rem);line-height:.9;color:var(--tq-d);letter-spacing:-.03em}
+.hud .lab{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-top:.5rem}
+.hud .row{margin-top:1.6rem;font-size:.85rem;display:grid;grid-template-columns:auto auto;gap:.3rem 1.2rem;justify-content:end}
+.hud .row b{font-family:"IBM Plex Mono",monospace;font-weight:500;color:var(--ink)}
+main{position:relative;z-index:1}
+.beat{height:140vh;position:relative;pointer-events:none}
+.beat .box{position:sticky;top:20vh;margin-left:2rem;max-width:36rem;padding:2rem 2.4rem 2rem 0;background:radial-gradient(120% 100% at 0% 100%,rgba(238,240,239,.96) 55%,rgba(238,240,239,0) 100%)}
+.beat h2{font-size:clamp(2.2rem,4.8vw,5.2rem);line-height:.95;letter-spacing:-.035em;font-weight:500;text-wrap:balance}
+.beat h2 .l{display:block;overflow:hidden}.beat h2 .l i{display:block;font-style:normal;transform:translateY(105%)}
+.beat h2 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq-d);letter-spacing:-.01em}
+.beat p{margin-top:1.2rem;font-size:1.05rem;line-height:1.55;max-width:32ch;color:#3A4240;opacity:0;transform:translateY(12px)}
+.beat .k{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tq-d);margin-bottom:1rem;opacity:0}
+/* the parked scene: hero + price control */
+#b0{height:220vh}
+#b0 .box{pointer-events:auto;max-width:40rem}
+#b0 h1{font-size:clamp(3rem,8.5vw,9rem);line-height:.88;letter-spacing:-.045em;font-weight:500}
+#b0 h1 .l{display:block;overflow:hidden}#b0 h1 .l i{display:block;font-style:normal;transform:translateY(105%)}
+#b0 h1 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq-d);letter-spacing:-.01em}
+.ctl{margin-top:2rem;max-width:30rem;opacity:0}
+.ctl p{opacity:1!important;transform:none!important}.ctl .q{font-size:.95rem;color:#3A4240;margin-bottom:1rem}
+.ctl input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:var(--ink);outline:0}
+.ctl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--tq);border:2px solid var(--ink);cursor:grab}
+.ctl .ends{display:flex;justify-content:space-between;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:.6rem}
+.ctl .say{margin-top:1.4rem;font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:1.5rem;line-height:1.25;color:var(--ink);min-height:3.8em}
+.end{min-height:100vh;display:grid;place-items:center;background:var(--ink);color:var(--bg);text-align:center;padding:6rem 2rem;position:relative}
+.end h2{font-size:clamp(3rem,8.5vw,9.5rem);line-height:.88;letter-spacing:-.045em;font-weight:500}
+.end h2 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq)}
+.end .btn{display:inline-flex;align-items:center;gap:1rem;margin-top:3rem;padding:1.3rem 2.2rem;border:1px solid rgba(238,240,239,.4);border-radius:99px;color:inherit;text-decoration:none;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;transition:.35s}
+.end .btn i{width:.5rem;height:.5rem;border-radius:50%;background:var(--tq)}
+.end .btn:hover{background:var(--tq);border-color:var(--tq);color:var(--ink)}
+.end .f{position:absolute;bottom:1.6rem;left:2rem;right:2rem;display:flex;justify-content:space-between;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;opacity:.5}
+@media(max-width:820px){.hud{top:auto;bottom:1.4rem;right:1.2rem;transform:none}.hud .sat{font-size:3rem}.hud .row{display:none}.beat .box{margin-left:1.2rem;margin-right:1.2rem;max-width:100%}#b0 h1{font-size:clamp(2.6rem,12vw,4.6rem)}nav .tog{display:none}}
+
+</style>

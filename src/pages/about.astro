@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+const schema = {"@context":"https://schema.org","@graph":[
+ {"@type":"RealEstateAgent","@id":"https://morb7.co.za/#agency","name":"Morb7 Realtors","url":"https://morb7.co.za","founder":{"@id":"https://morb7.co.za/#spencer"},"areaServed":[{"@type":"Place","name":"Randpark Ridge, Johannesburg"},{"@type":"Place","name":"Weltevreden Park, Johannesburg"},{"@type":"Place","name":"Sundowner, Johannesburg"}],"address":{"@type":"PostalAddress","addressLocality":"Johannesburg","addressRegion":"Gauteng","addressCountry":"ZA"}},
+ {"@type":"Person","@id":"https://morb7.co.za/#spencer","name":"Spencer Morby","jobTitle":"Estate agent","worksFor":{"@id":"https://morb7.co.za/#agency"},"description":"Estate agent selling, letting and valuing homes in Randpark Ridge, Weltevreden Park and Sundowner, Johannesburg, since 1989.","knowsAbout":["Randpark Ridge property","Weltevreden Park property","Sundowner property","Residential property valuation","Selling a home in Johannesburg West Rand"]},
+ {"@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"Why do three estate agents give three different valuations for the same house?","acceptedAnswer":{"@type":"Answer","text":"Two of the numbers are usually honest and one is usually a bid for your signature. Ask each agent to explain why their number differs from the others and to show you the last three sales they did within a kilometre of you. The agent who can explain the difference is the one to trust."}},
+  {"@type":"Question","name":"Should I list my house at a higher price and come down later?","acceptedAnswer":{"@type":"Answer","text":"No. A house gets its real attention in the first three weeks on the market. Every buyer waiting in your price range sees it in that window. If it is priced high they compare it with the houses down the road and wait, and when you drop the price later they know you will drop it again."}},
+  {"@type":"Question","name":"Which suburbs does Spencer Morby work in?","acceptedAnswer":{"@type":"Answer","text":"Randpark Ridge, Weltevreden Park and Sundowner in Johannesburg. Only those three, since 1989."}}
+ ]}
+]};
+---
+<Base title="Spencer Morby, estate agent in Randpark Ridge, Weltevreden Park and Sundowner since 1989" description="Spencer Morby has sold, let and valued homes in Randpark Ridge, Weltevreden Park and Sundowner for 37 years. One person, three suburbs, no franchise." journey="selling" fixedNav={false} schema={schema}>
+
+<div class="wrap">
+
+<header class="hero">
+  <div><h1>One person. Three suburbs. <em>Thirty-seven years</em> of telling the truth about your street.</h1>
+  <p class="lede">I am Spencer Morby. I sell, let, value and advise on homes in Randpark Ridge, Weltevreden Park and Sundowner, and nowhere else. This page is what I would tell you across a kitchen table, written down.</p></div>
+  <div class="port" aria-label="Portrait of Spencer Morby (photograph to be taken)"><svg viewBox="0 0 400 500" aria-hidden="true"><g fill="none" stroke="#141816" stroke-opacity=".14"><path d="M0 420h400M0 380h400M0 340h400M40 500V300M120 500V280M200 500V260M280 500V280M360 500V300"/></g></svg><div class="n">37</div><div class="cap">Portrait · to shoot</div></div>
+</header>
+
+<section class="facts" aria-label="At a glance">
+  <div><b>1989</b><span>First sale on these streets</span></div>
+  <div><b>3</b><span>Suburbs, and only three</span></div>
+  <div><b>1</b><span>Person. No team that rotates</span></div>
+  <div><b>0</b><span>Franchises behind the name</span></div>
+</section>
+
+<section class="prose">
+  <aside class="side"><a href="#streets">The streets</a><a href="#sellers">What I tell sellers</a><a href="#buyers">What I tell buyers</a><a href="#why">Why I do it this way</a></aside>
+  <div class="body">
+    <h2 id="streets">The streets, not just the houses</h2>
+    <p>The law makes a seller tell you everything about the house. Nobody has to tell you anything about the street. Which side of the road is on which reservoir zone, so who gets their water back first. Which dip turns into a river every February. Which school actually takes children from your side of the boundary, as opposed to the one the map says. Which boom is a real security estate and which is a gate with a guard who goes home at six.</p>
+    <p>I have watched these three suburbs since 1989. I have sold a good number of the houses on them more than once. That is the whole business: I know the streets, and I will tell you what I know, including the parts that cost me the listing.</p>
+    <p class="pull">Ask me about your street. If it is not one of mine, I will say so and point you to someone who knows it.</p>
+
+    <h2 id="sellers">What I tell sellers</h2>
+    <ul class="list">
+      <li><b>1</b><span>Get two other valuations. Then ask all three of us why the numbers differ. The agent who can explain the difference is the one to trust. Sometimes that is not me, and I will say so.</span></li>
+      <li><b>2</b><span>The market does not care what you paid, what your neighbour got in 2021, or what you need to clear the bond. It cares what a buyer will pay this month. I will give you that number even when you want a bigger one.</span></li>
+      <li><b>3</b><span>The high number is a trap. A house gets its real attention in the first three weeks. Price it high and the buyers who were waiting look, compare, and wait. Six weeks later you drop it, and everyone who watched now knows you will drop it again.</span></li>
+      <li><b>4</b><span>This might not be the year to sell. If waiting makes you money, I will tell you to wait. I have done this long enough that I do not need this listing. I need you to come back.</span></li>
+    </ul>
+    <p>If you are thinking about selling but not yet, that is the most useful time to talk and almost nobody does. <a href="/selling">Park outside your house</a> and I will show you what I mean.</p>
+
+    <h2 id="buyers">What I tell buyers</h2>
+    <p>The bank looks at the bond repayment. You live with all of it: rates, levies, water and lights, insurance, the maintenance a 1980s roof asks for, and the once-off costs of buying that nobody puts on the listing. I do those sums with you properly, for the actual house, before you fall in love with it.</p>
+    <p>And I would rather know what your Saturday looks like than how many bedrooms you want. Bedrooms are on the portal. Whether the street suits how you actually live is not.</p>
+
+    <h2 id="why">Why I do it this way</h2>
+    <p>Because a name in three suburbs for thirty-seven years is worth more to me than any single mandate. Every time I tell someone a smaller number than they hoped for, or tell them not to sell this year, I lose a listing and keep a client. That trade has worked since 1989 and I am not going to change it now.</p>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <h2>Questions I get asked at the kitchen table</h2>
+  <details><summary>Why do three estate agents give three different valuations for the same house?</summary><p>Two of the numbers are usually honest and one is usually a bid for your signature. Ask each agent to explain why their number differs from the others and to show you the last three sales they did within a kilometre of you. The agent who can explain the difference is the one to trust.</p></details>
+  <details><summary>Should I list my house at a higher price and come down later?</summary><p>No. A house gets its real attention in the first three weeks on the market. Every buyer waiting in your price range sees it in that window. If it is priced high they compare it with the houses down the road and wait, and when you drop the price later they know you will drop it again.</p></details>
+  <details><summary>Which suburbs does Spencer Morby work in?</summary><p>Randpark Ridge, Weltevreden Park and Sundowner in Johannesburg. Only those three, since 1989.</p></details>
+</section>
+</div>
+
+<section class="cta"><div class="wrap in"><h2>Tell me your street.<br><em>I will tell you the truth about it.</em></h2><div><p>Not a form that goes into a CRM. A WhatsApp that goes to one person, who has answered it himself since 1989.</p><a href="#"><i></i>WhatsApp Spencer</a></div></div></section>
+<div class="wrap"><footer><span>Morb7 Realtors · Spencer Morby</span><span>Randpark Ridge · Weltevreden Park · Sundowner</span><span>Layer 2 · About · v0.1</span></footer></div>
+
+</Base>
+<style is:global>
+.nav{position:static;padding:1.4rem 0;width:min(100% - 3rem,72rem);margin-inline:auto}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:"Familjen Grotesk",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{width:min(100% - 3rem,72rem);margin-inline:auto}
+/* hero: big type, the number, a portrait slot that is honest about being a slot */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:4rem;align-items:end;padding:8vh 0 6vh;border-bottom:1.5px solid var(--ink)}
+.hero h1{font-size:clamp(2.4rem,5vw,5.2rem);line-height:.92;letter-spacing:-.04em;font-weight:500;text-wrap:balance}
+.hero h1 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq-d);letter-spacing:-.01em}
+.hero .lede{margin-top:2rem;font-size:1.2rem;line-height:1.5;max-width:44ch;color:#3A4240}
+.port{aspect-ratio:4/5;border:1.5px solid var(--ink);position:relative;overflow:hidden;background:linear-gradient(160deg,#E3E7E6,#EEF0EF)}
+.port svg{position:absolute;inset:0;width:100%;height:100%}
+.port .cap{position:absolute;left:1rem;bottom:1rem;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tq-d)}
+.port .n{position:absolute;right:1rem;top:.6rem;font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:clamp(5rem,9vw,9rem);line-height:1;color:var(--tq-d);letter-spacing:-.05em}
+/* facts strip */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1.5px solid var(--ink)}
+.facts div{padding:1.6rem 1.6rem 1.6rem 0;border-right:1px solid var(--rule)}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:2.6rem;line-height:1;color:var(--tq-d);letter-spacing:-.03em}
+.facts span{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);display:block;margin-top:.5rem}
+/* prose */
+.prose{display:grid;grid-template-columns:14rem 1fr;gap:4rem;padding:6vh 0}
+.prose .side{position:sticky;top:2rem;align-self:start;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.prose .side a{display:block;text-decoration:none;padding:.4rem 0;border-top:1px solid var(--rule)}
+.prose .side a:last-child{border-bottom:1px solid var(--rule)}
+.prose .body{max-width:62ch;font-family:Newsreader,serif;font-size:1.3rem;line-height:1.55;font-weight:400}
+.prose h2{font-family:"Familjen Grotesk";font-size:2.2rem;line-height:1.05;letter-spacing:-.03em;font-weight:500;margin:3.4rem 0 1.2rem;scroll-margin-top:2rem}
+.prose h2:first-child{margin-top:0}
+.prose p{margin-bottom:1.3rem}
+.prose .pull{font-style:italic;font-weight:300;font-size:2rem;line-height:1.2;color:var(--tq-d);margin:2.4rem 0 2.4rem -1.6rem;padding-left:1.4rem;border-left:2px solid var(--tq)}
+.prose .list{font-family:"Familjen Grotesk";font-size:1.05rem;list-style:none;margin:1rem 0 2rem}
+.prose .list li{display:grid;grid-template-columns:2rem 1fr;gap:1rem;padding:.9rem 0;border-top:1px solid var(--rule)}
+.prose .list li:last-child{border-bottom:1px solid var(--rule)}
+.prose .list b{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq-d);font-size:1.3rem;line-height:1}
+/* FAQ, visible and matching the schema */
+.faq{padding:4vh 0 8vh;border-top:1.5px solid var(--ink)}
+.faq h2{font-size:2.2rem;letter-spacing:-.03em;font-weight:500;margin-bottom:1.6rem}
+.faq details{border-top:1px solid var(--rule)}
+.faq details:last-of-type{border-bottom:1px solid var(--rule)}
+.faq summary{cursor:pointer;list-style:none;padding:1.3rem 0;font-size:1.25rem;font-weight:500;display:flex;justify-content:space-between;gap:2rem;letter-spacing:-.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:Newsreader;font-weight:300;font-size:1.8rem;line-height:1;color:var(--tq-d);transition:transform .3s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{font-family:Newsreader,serif;font-size:1.2rem;line-height:1.55;max-width:62ch;padding:0 0 1.6rem}
+/* cta */
+.cta{background:var(--ink);color:var(--bg);padding:10vh 0}
+.cta .in{display:grid;grid-template-columns:1.3fr 1fr;gap:3rem;align-items:end}
+.cta h2{font-size:clamp(2.4rem,6vw,6rem);line-height:.9;letter-spacing:-.04em;font-weight:500}
+.cta h2 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq)}
+.cta a{display:inline-flex;align-items:center;gap:1rem;padding:1.2rem 2rem;border:1px solid rgba(238,240,239,.4);border-radius:99px;text-decoration:none;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;transition:.3s}
+.cta a i{width:.5rem;height:.5rem;border-radius:50%;background:var(--tq)}
+.cta a:hover{background:var(--tq);border-color:var(--tq);color:var(--ink)}
+.cta p{opacity:.7;margin-bottom:1.6rem;max-width:36ch}
+footer{padding:1.6rem 0;display:flex;justify-content:space-between;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+@media(max-width:860px){.hero,.prose,.cta .in{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}.facts div:nth-child(2){border-right:0}.prose .side{position:static;display:none}.prose .pull{margin-left:0}nav .r{display:none}.port{max-width:22rem}}
+
+</style>

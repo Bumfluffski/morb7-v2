@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+export function getStaticPaths() {
+  return [
+    { params: { suburb: 'randpark-ridge' }, props: { name: 'Randpark Ridge' } },
+    { params: { suburb: 'weltevreden-park' }, props: { name: 'Weltevreden Park' } },
+    { params: { suburb: 'sundowner' }, props: { name: 'Sundowner' } },
+  ];
+}
+const { name } = Astro.props;
+// Every claim on a suburb guide is Spencer's or it does not ship.
+// Anything below marked TODO(spencer) renders as a placeholder box, never as fact.
+const sections = [
+  { id: 'streets', h: 'The three streets I would drive you down first', body: null },
+  { id: 'water', h: 'Water: who gets it back first', body: null },
+  { id: 'weather', h: 'Weather: where the water goes in February', body: null },
+  { id: 'schools', h: 'Schools: which side of the road', body: null },
+  { id: 'security', h: 'Security: which booms are real', body: null },
+  { id: 'sells', h: 'What sells here, and what sits', body: null },
+];
+const schema = { '@context': 'https://schema.org', '@type': 'Place', name: `${name}, Johannesburg`, description: `What Spencer Morby knows about the streets of ${name}, after 37 years.` };
+---
+<Base title={`${name} — the streets, from Spencer Morby`} description={`What an estate agent who has watched ${name} since 1989 will tell you about its streets: water, weather, schools, security, what sells.`} journey="buying" fixedNav={false} schema={schema}>
+<div class="wrap">
+  <header class="hero"><p class="k">The suburbs · {name}</p><h1>What I know about <em>{name}</em>, street by street.</h1></header>
+  {sections.map(s => (
+    <section id={s.id} class="sec">
+      <h2>{s.h}</h2>
+      {s.body ? <div set:html={s.body} /> : <div class="todo" aria-label="Awaiting Spencer">Waiting for Spencer's answer. Nothing is written here until he has said it. <span>TODO(spencer)</span></div>}
+    </section>
+  ))}
+</div>
+</Base>
+<style is:global>
+.nav{position:static;padding:1.4rem 0;width:min(100% - 3rem,72rem);margin-inline:auto}
+.wrap{width:min(100% - 3rem,72rem);margin-inline:auto;padding-bottom:10vh}
+.hero{padding:8vh 0 4vh;border-bottom:1.5px solid var(--ink)}
+.k{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tq-d);margin-bottom:1rem}
+h1{font-size:clamp(2.4rem,5vw,5.2rem);line-height:.95;letter-spacing:-.04em;font-weight:500;max-width:18ch}
+h1 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq-d)}
+.sec{padding:3rem 0;border-bottom:1px solid var(--rule);max-width:62ch}
+h2{font-size:1.9rem;letter-spacing:-.03em;font-weight:500;margin-bottom:1rem}
+.todo{border:1.5px dashed var(--tq);padding:1.2rem 1.4rem;font-family:Newsreader,serif;font-style:italic;font-size:1.15rem;color:var(--tq-d)}
+.todo span{display:block;font:500 .65rem "IBM Plex Mono",monospace;letter-spacing:.14em;margin-top:.6rem;font-style:normal}
+</style>

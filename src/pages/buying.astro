@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Drive the streets with Spencer Morby" description="What the portals cannot tell you about Randpark Ridge, Weltevreden Park and Sundowner. Water, weather, schools, from an agent who has watched them for 37 years." journey="buying">
+<canvas id="gl"></canvas><div class="grain"></div>
+<div id="ld"><div class="w"><div class="n" id="ldn">0</div><div class="s">Drawing the streets</div></div><div class="bar" id="ldb"></div></div>
+<div class="rail"><span class="on">Street</span><span>Water</span><span>Weather</span><span>Schools</span><span>Above</span></div>
+<div class="hint"><span>Scroll to drive</span><i></i></div>
+<div class="lbl" id="l0">Randpark Ridge</div><div class="lbl" id="l1">Weltevreden Park</div><div class="lbl" id="l2">Sundowner</div>
+
+<main>
+  <section class="beat" id="b0" style="height:100vh"><h1><span class="l"><i>Drive it</i></span><span class="l"><i>with <em>me.</em></i></span></h1><div class="who"><b>Spencer Morby</b>Estate agent, thirty-seven years.<br>Randpark Ridge · Weltevreden Park · Sundowner</div></section>
+  <section class="beat" data-i="1"><div class="box r"><div class="k">Water</div><h2><span class="l"><i>This side of the road</i></span><span class="l"><i>is on a <em>different</em></i></span><span class="l"><i><em>reservoir.</em></i></span></h2><p>When the water goes off, the two houses facing each other do not get it back on the same day. Nobody puts that on a listing. I keep the list.</p></div></section>
+  <section class="beat" data-i="2"><div class="box"><div class="k">Weather</div><h2><span class="l"><i>That dip becomes</i></span><span class="l"><i>a <em>river</em> in February.</i></span></h2><p>North-facing, the ad says. It does not say what the driveway does in a highveld storm. I have watched it do it for thirty-seven summers.</p></div></section>
+  <section class="beat" data-i="3"><div class="box"><div class="k">Schools</div><h2><span class="l"><i>The school takes</i></span><span class="l"><i>children from <em>this</em> side.</i></span><span class="l"><i>Not that one.</i></span></h2><p>Catchment on paper and catchment in practice are two different maps. I know both. I sold half these houses to the parents.</p></div></section>
+  <section class="beat" id="b4" data-i="4"><div class="num">37</div><div class="box"><h2><span class="l"><i>Three suburbs.</i></span><span class="l"><i><em>One person</em> who has</i></span><span class="l"><i>watched all of them.</i></span></h2><p>Not a franchise. Not a team that rotates. The same number since 1989, and the same three suburbs.</p></div></section>
+  <section class="end"><div><h2>Tell me your street.<br><em>I will tell you the truth about it.</em></h2><a class="btn" href="#"><i></i>WhatsApp Spencer</a></div><div class="f"><span>Morb7 Realtors · Spencer Morby</span><span>Vertical slice · v0.1</span></div></section>
+</main>
+
+<script>
+  import { mount } from '../scenes/drive.js';
+  mount();
+</script>
+</Base>
+<style is:global>
+
+.it{font-family:Newsreader,serif;font-style:italic;font-weight:300}
+#gl{position:fixed;inset:0;z-index:0}
+/* loader */
+#ld{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center}
+#ld .w{text-align:center}
+#ld .n{font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:clamp(5rem,16vw,14rem);line-height:.9;color:var(--tq-d);letter-spacing:-.04em}
+#ld .s{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-top:1.2rem}
+#ld .bar{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--tq);transform:scaleX(0);transform-origin:left}
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2rem;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;opacity:0}
+nav .r{display:flex;gap:1.8rem}nav .r span{position:relative;cursor:pointer}
+nav .r span::after{content:"";position:absolute;left:0;bottom:-3px;width:100%;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:right;transition:transform .4s cubic-bezier(.7,0,.2,1)}
+nav .r span:hover::after{transform:scaleX(1);transform-origin:left}
+nav .cta{background:var(--ink);color:var(--bg);padding:.7rem 1.1rem;border-radius:99px;transition:background .3s}
+nav .cta:hover{background:var(--tq)}
+/* progress rail */
+.rail{position:fixed;right:2rem;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:1rem;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;opacity:0}
+.rail span{display:flex;align-items:center;gap:.7rem;opacity:.3;transition:opacity .4s}
+.rail span::before{content:"";width:1.4rem;height:1px;background:var(--ink);transition:background .4s,width .4s}
+.rail span.on{opacity:1}.rail span.on::before{background:var(--tq);width:2.4rem}
+/* scroll hint */
+.hint{position:fixed;left:50%;bottom:1.6rem;transform:translateX(-50%);z-index:30;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0}
+.hint i{width:1px;height:2.2rem;background:var(--ink);display:block;transform-origin:top;animation:hint 1.8s cubic-bezier(.7,0,.2,1) infinite}
+@keyframes hint{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+/* beats */
+main{position:relative;z-index:1}
+.beat{height:140vh;position:relative;pointer-events:none}
+.beat .box{position:sticky;top:22vh;margin-left:2rem;max-width:36rem;padding:2rem 2.4rem 2rem 0;background:radial-gradient(120% 100% at 0% 100%,rgba(238,240,239,.96) 55%,rgba(238,240,239,0) 100%)}
+.beat .box.r{margin-left:auto;margin-right:2rem;text-align:right;padding:2rem 0 2rem 2.4rem;background:radial-gradient(120% 100% at 100% 100%,rgba(238,240,239,.96) 55%,rgba(238,240,239,0) 100%)}
+.beat .box.r p{margin-left:auto}
+.beat h2{font-size:clamp(2.2rem,4.8vw,5.2rem);line-height:.95;letter-spacing:-.035em;font-weight:500;text-wrap:balance}
+.beat h2 .l{display:block;overflow:hidden}.beat h2 .l i{display:block;font-style:normal;transform:translateY(105%)}
+.beat h2 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq-d);letter-spacing:-.01em}
+.beat p{margin-top:1.2rem;font-size:1.05rem;line-height:1.55;max-width:32ch;color:#3A4240;opacity:0;transform:translateY(12px)}
+.beat .k{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tq-d);margin-bottom:1rem;opacity:0}
+#b0 h1{position:absolute;left:2rem;bottom:12vh;font-size:clamp(3.6rem,11.5vw,13rem);line-height:.86;letter-spacing:-.045em;font-weight:500}
+#b0 h1 .l{display:block;overflow:hidden}#b0 h1 .l i{display:block;font-style:normal;transform:translateY(105%)}
+#b0 h1 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq-d);letter-spacing:-.01em}
+#b0 .who{position:absolute;right:2rem;bottom:12vh;text-align:right;font-size:.85rem;line-height:1.6;color:#3A4240;opacity:0}
+#b0 .who b{display:block;font-weight:500;color:var(--ink);font-size:1rem}
+/* overhead labels */
+.lbl{position:fixed;z-index:20;transform:translate(-50%,-50%);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;background:var(--ink);color:var(--bg);padding:.4rem .7rem;border-radius:99px;opacity:0;pointer-events:none;white-space:nowrap}
+.lbl b{font-family:Newsreader,serif;font-style:italic;font-weight:300;text-transform:none;letter-spacing:0;font-size:1rem;color:var(--tq);margin-left:.4rem}
+/* number beat */
+#b4 .num{position:sticky;top:14vh;display:block;text-align:left;margin-left:1.4rem;font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:clamp(9rem,24vw,24rem);line-height:.8;color:var(--tq-d);letter-spacing:-.06em;opacity:0}
+#b4 .box{position:sticky;top:40vh;margin:0 2rem 0 auto;text-align:right;max-width:30rem;padding:0;background:none}#b4 .box p{margin-left:auto}
+#b4 .box p{margin-inline:auto}
+/* end */
+.end{min-height:100vh;display:grid;place-items:center;background:var(--ink);color:var(--bg);text-align:center;padding:6rem 2rem;position:relative}
+.end h2{font-size:clamp(3rem,8.5vw,9.5rem);line-height:.88;letter-spacing:-.045em;font-weight:500}
+.end h2 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq)}
+.end .btn{display:inline-flex;align-items:center;gap:1rem;margin-top:3rem;padding:1.3rem 2.2rem;border:1px solid rgba(238,240,239,.4);border-radius:99px;color:inherit;text-decoration:none;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;transition:background .35s,border-color .35s,color .35s}
+.end .btn i{width:.5rem;height:.5rem;border-radius:50%;background:var(--tq)}
+.end .btn:hover{background:var(--tq);border-color:var(--tq);color:var(--ink)}
+.end .f{position:absolute;bottom:1.6rem;left:2rem;right:2rem;display:flex;justify-content:space-between;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;opacity:.5}
+@media(max-width:820px){.rail,nav .r{display:none}.beat .box,.beat .box.r{left:1.2rem;right:1.2rem;bottom:10vh;text-align:left;max-width:100%}.beat .box.r p{margin-left:0}#b0 h1{left:1.2rem}#b0 .who{display:none}.beat h2{font-size:clamp(2.2rem,10vw,4rem)}}
+@media(prefers-reduced-motion:reduce){.hint i{animation:none}}
+
+</style>

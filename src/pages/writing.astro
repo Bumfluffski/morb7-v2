@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Notes from the street — Spencer Morby" description="Short first-person notes on Randpark Ridge, Weltevreden Park and Sundowner." fixedNav={false}>
+<div class="wrap"><h1>Notes from <em>the street.</em></h1><p class="todo">First posts arrive after the interview. Each one is a single checkable claim, in Spencer's words.</p></div>
+</Base>
+<style is:global>
+.nav{position:static;padding:1.4rem 0;width:min(100% - 3rem,72rem);margin-inline:auto}
+.wrap{width:min(100% - 3rem,72rem);margin-inline:auto;padding:8vh 0}
+h1{font-size:clamp(2.4rem,5vw,5.2rem);line-height:.95;letter-spacing:-.04em;font-weight:500}
+h1 em{font-family:Newsreader,serif;font-style:italic;font-weight:300;color:var(--tq-d)}
+.todo{margin-top:2rem;border:1.5px dashed var(--tq);padding:1.2rem 1.4rem;font-family:Newsreader,serif;font-style:italic;font-size:1.15rem;color:var(--tq-d);max-width:48ch}
+</style>
