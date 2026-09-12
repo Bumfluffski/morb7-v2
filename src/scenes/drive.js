@@ -10,7 +10,7 @@ const mobile=innerWidth<820;
 /* ---------- scene ---------- */
 const canvas=document.getElementById('gl');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-renderer.setPixelRatio(Math.min(2,devicePixelRatio));renderer.setSize(innerWidth,innerHeight);
+renderer.setPixelRatio(Math.min(1.5,devicePixelRatio));renderer.setSize(innerWidth,innerHeight);
 const scene=new THREE.Scene();const BG=new THREE.Color('#EEF0EF');scene.fog=new THREE.Fog(BG,18,mobile?110:150);
 const camera=new THREE.PerspectiveCamera(mobile?62:48,innerWidth/innerHeight,.1,600);
 const INK=new THREE.Color('#141816'),TQ=new THREE.Color('#16C2B5');
@@ -20,7 +20,7 @@ const tqLine=new THREE.LineBasicMaterial({color:TQ,transparent:true,opacity:1});
 /* terrain: the road dips at z≈110. that dip is the flood */
 const DIP={z:86,w:30,d:2.4};const dipY=z=>{const t=Math.min(1,Math.abs(z-DIP.z)/DIP.w);const k=1-t;return -DIP.d*(k*k*(3-2*k))};
 /* ground grid */
-{const g=new THREE.BufferGeometry();const pts=[];for(let z=-60;z<=420;z+=8){pts.push(-160,dipY(z),z,160,dipY(z),z)}for(let x=-160;x<=160;x+=8){for(let z=-60;z<420;z+=4){pts.push(x,dipY(z),z,x,dipY(z+4),z+4)}}g.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));scene.add(new THREE.LineSegments(g,faintMat))}
+{const g=new THREE.BufferGeometry();const pts=[];for(let z=-60;z<=420;z+=8){pts.push(-160,dipY(z),z,160,dipY(z),z)}for(let x=-160;x<=160;x+=8){for(let z=-60;z<420;z+=8){pts.push(x,dipY(z),z,x,dipY(z+8),z+8)}}g.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));scene.add(new THREE.LineSegments(g,faintMat))}
 /* street centre line */
 {const g=new THREE.BufferGeometry();const pts=[];for(let z=-60;z<270;z+=6){pts.push(0,dipY(z)+.02,z,0,dipY(z+3)+.02,z+3)}g.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));scene.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:INK,transparent:true,opacity:.5})))}
 /* houses */
@@ -46,7 +46,7 @@ for(let z=-10;z<230;z+=24){const g=new THREE.BufferGeometry();const y=dipY(z);g.
 /* water line (gutter) */
 const WN=140;const wg=new THREE.BufferGeometry();wg.setAttribute('position',new THREE.Float32BufferAttribute(new Float32Array(WN*3),3));const water=new THREE.Line(wg,new THREE.LineBasicMaterial({color:TQ,transparent:true,opacity:0}));scene.add(water);
 /* rain: streaks, not dots */
-const RN=mobile?500:1600;const rg=new THREE.BufferGeometry();const rp=new Float32Array(RN*6);for(let i=0;i<RN;i++){const x=(R()-.5)*70,y=R()*34,z=R()*90;rp[i*6]=x;rp[i*6+1]=y;rp[i*6+2]=z;rp[i*6+3]=x+.15;rp[i*6+4]=y+1.1+R()*.8;rp[i*6+5]=z}rg.setAttribute('position',new THREE.BufferAttribute(rp,3));const rain=new THREE.LineSegments(rg,new THREE.LineBasicMaterial({color:TQ,transparent:true,opacity:0,depthWrite:false}));scene.add(rain);
+const RN=mobile?400:900;const rg=new THREE.BufferGeometry();const rp=new Float32Array(RN*6);for(let i=0;i<RN;i++){const x=(R()-.5)*70,y=R()*34,z=R()*90;rp[i*6]=x;rp[i*6+1]=y;rp[i*6+2]=z;rp[i*6+3]=x+.15;rp[i*6+4]=y+1.1+R()*.8;rp[i*6+5]=z}rg.setAttribute('position',new THREE.BufferAttribute(rp,3));const rain=new THREE.LineSegments(rg,new THREE.LineBasicMaterial({color:TQ,transparent:true,opacity:0,depthWrite:false}));scene.add(rain);
 /* flood: a plane that fills the dip */
 const FW=110,FL=DIP.w*2.2;const fgeo=new THREE.PlaneGeometry(FW,FL,44,26);fgeo.rotateX(-Math.PI/2);const flood=new THREE.Mesh(fgeo,new THREE.MeshBasicMaterial({color:TQ,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide}));flood.position.set(0,-DIP.d-1,DIP.z);scene.add(flood);
 const floodEdge=new THREE.LineSegments(new THREE.EdgesGeometry(fgeo,1),new THREE.LineBasicMaterial({color:TQ,transparent:true,opacity:0}));flood.add(floodEdge);
@@ -77,14 +77,16 @@ function applyProgress(p){
 const clock=new THREE.Clock();
 /* damping: frame-rate independent, tuned so wheel steps blur into one motion. K=2.6 ≈ 0.4s to settle */
 const K=2.6;
+let fpsEl=null,fN=0,fT=0;if(location.search.includes('fps')){fpsEl=document.createElement('div');fpsEl.style.cssText='position:fixed;left:1rem;bottom:1rem;z-index:99;font:500 12px/1 monospace;background:#141816;color:#16C2B5;padding:6px 8px;border-radius:6px';document.body.appendChild(fpsEl)}
 function frame(){const dt=Math.min(.05,clock.getDelta());const t=clock.elapsedTime;
+ if(fpsEl){fN++;fT+=dt;if(fT>=.5){fpsEl.textContent=Math.round(fN/fT)+' fps · dpr '+renderer.getPixelRatio();fN=0;fT=0}}
  drive.p+=(drive.target-drive.p)*(reduce?1:1-Math.exp(-dt*K));applyProgress(drive.p);updateCamera();
  const cz=camera.position.z,L=state.lift;
  houses.forEach(h=>{const pred=beats[state.beat];let target=0;
   if(state.beat===4){target=.5}else if(pred&&pred(h)&&h.z>cz+4&&h.z<cz+70){target=.55}
   h.t+=(target-h.t)*.08;h.fill.material.opacity=h.t;h.edges.material.color.copy(INK).lerp(TQ,Math.min(1,h.t*1.6))});
  // water
- const wp=water.geometry.attributes.position.array;for(let i=0;i<WN;i++){const z=cz+2+i*.9;wp[i*3]=4.6+Math.sin(z*.35+t*3)*.35;wp[i*3+1]=.06+Math.sin(z*.8-t*4)*.04;wp[i*3+2]=z}water.geometry.attributes.position.needsUpdate=true;
+ if(water.material.opacity>.01||state.beat===1){const wp=water.geometry.attributes.position.array;for(let i=0;i<WN;i++){const z=cz+2+i*.9;wp[i*3]=4.6+Math.sin(z*.35+t*3)*.35;wp[i*3+1]=.06+Math.sin(z*.8-t*4)*.04;wp[i*3+2]=z}water.geometry.attributes.position.needsUpdate=true}
  water.material.opacity+=((state.beat===1?1:0)-water.material.opacity)*.08;
  // weather: rain falls, the dip fills, the road goes under
  const wet=state.beat===2?1:0;floodT+=(wet-floodT)*.035;
