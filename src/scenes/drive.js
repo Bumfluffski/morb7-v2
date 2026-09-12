@@ -75,7 +75,10 @@ function applyProgress(p){
  // beats keyed to the same progress the camera uses
  const b=p<.13?0:p<.35?1:p<.57?2:p<.78?3:4;if(b!==state.beat)setBeat(b)}
 const clock=new THREE.Clock();
-function frame(){const t=clock.getElapsedTime();drive.p+=(drive.target-drive.p)*(reduce?1:.1);applyProgress(drive.p);updateCamera();
+/* damping: frame-rate independent, tuned so wheel steps blur into one motion. K=2.6 ≈ 0.4s to settle */
+const K=2.6;
+function frame(){const dt=Math.min(.05,clock.getDelta());const t=clock.elapsedTime;
+ drive.p+=(drive.target-drive.p)*(reduce?1:1-Math.exp(-dt*K));applyProgress(drive.p);updateCamera();
  const cz=camera.position.z,L=state.lift;
  houses.forEach(h=>{const pred=beats[state.beat];let target=0;
   if(state.beat===4){target=.5}else if(pred&&pred(h)&&h.z>cz+4&&h.z<cz+70){target=.55}
