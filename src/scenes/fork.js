@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 export function mount(){
 const mobile=innerWidth<820;
+['/buying','/selling'].forEach(h=>{const l=document.createElement('link');l.rel='prefetch';l.href=h;document.head.appendChild(l)});
 const canvas=document.getElementById('gl');const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});renderer.setPixelRatio(Math.min(2,devicePixelRatio));renderer.setSize(innerWidth,innerHeight);
 const scene=new THREE.Scene();scene.fog=new THREE.Fog(new THREE.Color('#EEF0EF'),20,150);
 const camera=new THREE.PerspectiveCamera(mobile?62:50,innerWidth/innerHeight,.1,600);
@@ -30,23 +31,25 @@ const houses=[];function house(x,z,rot,side){const w=5+R()*3,d=6+R()*4,h=3+R()*2
  const fill=new THREE.Mesh(fg,new THREE.MeshBasicMaterial({color:TQ,transparent:true,opacity:0,side:THREE.DoubleSide,depthWrite:false}));
  const grp=new THREE.Group();grp.add(fill,edges);grp.position.set(x,0,z);grp.rotation.y=rot;scene.add(grp);houses.push({grp,fill,edges,side,t:0})}
 for(let i=0;i<(mobile?14:22);i++){const s=i%2?1:-1;house(s*(10+R()*3),-30+(i>>1)*8.5,0,'trunk')}
-function branch(pts,side){for(let i=0;i<pts.length-1;i++){const a=pts[i],b=pts[i+1];const d=b.clone().sub(a);const len=d.length();d.normalize();const n=new THREE.Vector3(-d.z,0,d.x);const rot=Math.atan2(d.x,d.z);for(let k=8;k<len;k+=9){const p=a.clone().add(d.clone().multiplyScalar(k));[1,-1].forEach(sg=>{const q=p.clone().add(n.clone().multiplyScalar(sg*(10+R()*3)));house(q.x,q.z,rot,side)})}}}
+function branch(pts,side){for(let i=0;i<pts.length-1;i++){const a=pts[i],b=pts[i+1];const d=b.clone().sub(a);const len=d.length();d.normalize();const n=new THREE.Vector3(-d.z,0,d.x);const rot=Math.atan2(d.x,d.z);for(let k=8;k<len;k+=9){const p=a.clone().add(d.clone().multiplyScalar(k));[1,-1].forEach(sg=>{const q=p.clone().add(n.clone().multiplyScalar(sg*(10+R()*3)));if(q.z<150&&Math.abs(q.x)<11)return;if(q.z<150&&Math.sign(q.x)!==Math.sign(b.x))return;house(q.x,q.z,rot,side)})}}}
 branch([V(0,60),V(18,110),V(60,200),V(110,300)],'L');branch([V(0,60),V(-18,110),V(-60,200),V(-110,300)],'R');
 /* camera */
-const cam={x:0,y:1.7,z:-30,lx:0,lz:60};let mx=0,my=0,lean=0,chosen=null;addEventListener('pointermove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=(e.clientY/innerHeight-.5)*2});
+const cam={x:0,y:1.7,z:-30,lx:0,lz:60};let mx=0,my=0,lean=0,chosen=null;const sm={x:0,y:0};addEventListener('pointermove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=(e.clientY/innerHeight-.5)*2});
 const clock=new THREE.Clock();
 function frame(){const t=clock.getElapsedTime();
  // idle creep forward toward the junction, lean toward hovered road
- if(!chosen){cam.z+=(12-cam.z)*.004;const target=-lean;cam.lx+=(target*26-cam.lx)*.04}
- camera.position.set(cam.x-(mobile?0:mx*.5),cam.y-my*.2,cam.z);camera.lookAt(cam.lx-mx*4,1.6-my*2,cam.lz);
+ if(!chosen){cam.z+=(12-cam.z)*.004;lean+=(mx-lean)*.06}
+ // look out of the window: the camera turns smoothly with the cursor, no snap at the centreline
+ sm.x+=((mobile?0:mx)-sm.x)*.05;sm.y+=(my-sm.y)*.05;
+ camera.position.set(cam.x-sm.x*.8,cam.y-sm.y*.2,cam.z);camera.lookAt(cam.lx-sm.x*22,1.6-sm.y*2.5,cam.lz);
  houses.forEach(h=>{let target=0;if(h.side==='L'&&lean<-.3)target=.4;if(h.side==='R'&&lean>.3)target=.4;if(chosen&&h.side===chosen)target=.55;h.t+=(target-h.t)*.08;h.fill.material.opacity=h.t;h.edges.material.color.copy(INK).lerp(TQ,Math.min(1,h.t*1.8))});
  leftMat.color.copy(INK).lerp(TQ,lean<-.3||chosen==='L'?1:0);rightMat.color.copy(INK).lerp(TQ,lean>.3||chosen==='R'?1:0);
  renderer.render(scene,camera);requestAnimationFrame(frame)}frame();
 addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()});
 /* hover leans, click drives */
 const L=document.getElementById('roadL'),Rr=document.getElementById('roadR');
-L.addEventListener('mouseenter',()=>lean=-1);Rr.addEventListener('mouseenter',()=>lean=1);[L,Rr].forEach(el=>el.addEventListener('mouseleave',()=>lean=0));
-function choose(side,href){return e=>{e.preventDefault();if(chosen)return;chosen=side;document.cookie=`morb7_journey=${side==='L'?'buying':'selling'};path=/;max-age=${60*60*24*90}`;
+
+function choose(side,href){return e=>{e.preventDefault();if(chosen)return;chosen=side;sessionStorage.setItem('morb7_from_fork','1');document.cookie=`morb7_journey=${side==='L'?'buying':'selling'};path=/;max-age=${60*60*24*90}`;
  const dir=side==='L'?1:-1;
  gsap.timeline({onComplete:()=>location.href=href})
   .to(cam,{z:60,duration:1.6,ease:'power2.in'},0).to(cam,{lx:dir*18,lz:110,duration:1.6,ease:'power2.inOut'},0)
