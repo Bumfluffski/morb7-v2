@@ -115,10 +115,14 @@ gsap.to('.lbl',{opacity:1,stagger:.15,scrollTrigger:{trigger:'#b4',start:'top 40
 gsap.to('.hint',{opacity:0,scrollTrigger:{trigger:'main',start:'top top',end:'+=300',scrub:true}});
 /* ---------- loader ---------- */
 const n={v:0};const ldn=document.getElementById('ldn');
-gsap.timeline({onComplete:()=>document.getElementById('ld').remove()})
+(function(){const fromFork=sessionStorage.getItem('morb7_from_fork')==='1';sessionStorage.removeItem('morb7_from_fork');
+ const ld=document.getElementById('ld');
+ if(fromFork){ld.style.background='#141816';ld.querySelector('.n').style.opacity=0;ld.querySelector('.s').style.opacity=0;ld.querySelector('.bar').style.opacity=0;
+  return gsap.timeline({onComplete:()=>ld.remove()}).to('#ld',{yPercent:-100,duration:.9,ease:'power4.inOut',delay:.15})}
+ return gsap.timeline({onComplete:()=>document.getElementById('ld').remove()})
  .to('#ldb',{scaleX:1,duration:1.6,ease:'power2.inOut'},0)
  .to(n,{v:37,duration:1.6,ease:'power2.inOut',onUpdate:()=>ldn.textContent=Math.round(n.v)},0)
- .to('#ld',{yPercent:-100,duration:1,ease:'power4.inOut'},'+=.25')
+ .to('#ld',{yPercent:-100,duration:1,ease:'power4.inOut'},'+=.25')})()
  .to('#b0 h1 .l i',{y:0,duration:1.1,stagger:.12,ease:'power4.out'},'-=.55')
  .to(['nav','.rail','#b0 .who','.hint'],{opacity:1,duration:.8,stagger:.05},'-=.5');
 
