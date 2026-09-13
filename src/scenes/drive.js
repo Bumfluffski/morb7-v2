@@ -3,8 +3,9 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 export function mount(){
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const mobile=innerWidth<820;
 /* ---------- scene ---------- */
@@ -113,18 +114,23 @@ document.querySelectorAll('.beat[data-i]').forEach(s=>{const i=+s.dataset.i;
 gsap.set('#b4 .num',{scale:.6});
 gsap.to('.lbl',{opacity:1,stagger:.15,scrollTrigger:{trigger:'#b4',start:'top 40%',end:'bottom 70%',toggleActions:'play reverse play reverse'}});
 gsap.to('.hint',{opacity:0,scrollTrigger:{trigger:'main',start:'top top',end:'+=300',scrub:true}});
+/* ---------- drive on: click to move to the next stop, scroll still works ---------- */
+const stops=()=>[0,...[...document.querySelectorAll('.beat[data-i]')].map(b=>b.offsetTop+innerHeight*.28),document.querySelector('.end').offsetTop];
+const btn=document.getElementById('driveon');const btnL=btn.querySelector('span');
+function nextStop(){const y=scrollY+2;return stops().find(t=>t>y)}
+function labelFor(){const st=stops();const i=st.findIndex(t=>t>scrollY+2);btnL.textContent=i===-1||i===st.length-1?'Talk to me':i===st.length-2?'One more stop':'Drive on'}
+btn.addEventListener('click',()=>{const t=nextStop();if(t===undefined){document.querySelector('.end .btn').focus();return}
+ gsap.to(window,{scrollTo:{y:t,autoKill:true},duration:1.9,ease:'power2.inOut'})});
+addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='Enter'&&document.activeElement===btn){e.preventDefault();btn.click()}});
+addEventListener('scroll',labelFor,{passive:true});labelFor();
 /* ---------- loader ---------- */
 const n={v:0};const ldn=document.getElementById('ldn');
-(function(){const fromFork=sessionStorage.getItem('morb7_from_fork')==='1';sessionStorage.removeItem('morb7_from_fork');
- const ld=document.getElementById('ld');
- if(fromFork){ld.style.background='#141816';ld.querySelector('.n').style.opacity=0;ld.querySelector('.s').style.opacity=0;ld.querySelector('.bar').style.opacity=0;
-  return gsap.timeline({onComplete:()=>ld.remove()}).to('#ld',{yPercent:-100,duration:.9,ease:'power4.inOut',delay:.15})}
- return gsap.timeline({onComplete:()=>document.getElementById('ld').remove()})
+gsap.timeline({onComplete:()=>document.getElementById('ld').remove()})
  .to('#ldb',{scaleX:1,duration:1.6,ease:'power2.inOut'},0)
  .to(n,{v:37,duration:1.6,ease:'power2.inOut',onUpdate:()=>ldn.textContent=Math.round(n.v)},0)
- .to('#ld',{yPercent:-100,duration:1,ease:'power4.inOut'},'+=.25')})()
+ .to('#ld',{yPercent:-100,duration:1,ease:'power4.inOut'},'+=.25')
  .to('#b0 h1 .l i',{y:0,duration:1.1,stagger:.12,ease:'power4.out'},'-=.55')
- .to(['nav','.rail','#b0 .who','.hint'],{opacity:1,duration:.8,stagger:.05},'-=.5');
+ .to(['nav','.rail','#b0 .who','.hint','#driveon'],{opacity:1,duration:.8,stagger:.05},'-=.5');
 
 
 }
