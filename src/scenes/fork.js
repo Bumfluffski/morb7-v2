@@ -49,7 +49,7 @@ addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight);camera.a
 /* hover leans, click drives */
 const L=document.getElementById('roadL'),Rr=document.getElementById('roadR');
 
-function choose(side,href){return e=>{e.preventDefault();if(chosen)return;chosen=side;sessionStorage.setItem('morb7_from_fork','1');document.cookie=`morb7_journey=${side==='L'?'buying':'selling'};path=/;max-age=${60*60*24*90}`;
+function choose(side,href){return e=>{e.preventDefault();if(chosen)return;chosen=side;document.cookie=`morb7_journey=${side==='L'?'buying':'selling'};path=/;max-age=${60*60*24*90}`;
  const dir=side==='L'?1:-1;
  gsap.timeline({onComplete:()=>location.href=href})
   .to(cam,{z:60,duration:1.6,ease:'power2.in'},0).to(cam,{lx:dir*18,lz:110,duration:1.6,ease:'power2.inOut'},0)
