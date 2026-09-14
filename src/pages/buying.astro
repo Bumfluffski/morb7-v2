@@ -1,16 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Drive the streets with Spencer Morby" description="What the portals cannot tell you about Randpark Ridge, Weltevreden Park and Sundowner. Water, weather, schools, from an agent who has watched them for 37 years." journey="buying">
+<Base title="Buying a home in Randpark Ridge, Weltevreden Park or Sundowner — drive the streets with estate agent Spencer Morby" description="What the portals cannot tell you about Randpark Ridge, Weltevreden Park and Sundowner. Water, weather, schools, from an agent who has watched them for 37 years." journey="buying">
 <canvas id="gl"></canvas><div class="grain"></div>
-<div id="ld"><div class="w"><div class="n" id="ldn">0</div><div class="s">Drawing the streets</div></div><div class="bar" id="ldb"></div></div>
+<div id="ld"><div class="w"><div class="n" id="ldn">37</div><p class="s1">years selling homes on these streets.</p><p class="s2">Let me drive you down them.</p></div><div class="bar" id="ldb"></div></div>
 <div class="rail"><span class="on">Street</span><span>Water</span><span>Weather</span><span>Schools</span><span>Above</span></div>
 <div class="hint"><span>Scroll, or press drive</span><i></i></div>
 <button id="driveon" class="driveon" type="button" aria-label="Drive on to the next stop"><span>Drive on</span><svg viewBox="0 0 48 24" aria-hidden="true"><path d="M2 12h42M34 3l10 9-10 9"/></svg></button>
 <div class="lbl" id="l0">Randpark Ridge</div><div class="lbl" id="l1">Weltevreden Park</div><div class="lbl" id="l2">Sundowner</div>
 
 <main>
-  <section class="beat" id="b0" style="height:100vh"><h1><span class="l"><i>Drive it</i></span><span class="l"><i>with <em>me.</em></i></span></h1><div class="who"><b>Spencer Morby</b>Estate agent, thirty-seven years.<br>Randpark Ridge · Weltevreden Park · Sundowner</div></section>
+  <section class="beat" id="b0" style="height:100vh"><h1><span class="l"><i>Drive it</i></span><span class="l"><i>with <em>me.</em></i></span></h1><div class="who"><b>Spencer Morby, estate agent</b>Selling homes here since 1989.<br>Randpark Ridge · Weltevreden Park · Sundowner</div></section>
   <section class="beat" data-i="1"><div class="box r"><div class="k">Water</div><h2><span class="l"><i>This side of the road</i></span><span class="l"><i>is on a <em>different</em></i></span><span class="l"><i><em>reservoir.</em></i></span></h2><p>When the water goes off, the two houses facing each other do not get it back on the same day. Nobody puts that on a listing. I keep the list.</p></div></section>
   <section class="beat" data-i="2"><div class="box"><div class="k">Weather</div><h2><span class="l"><i>That dip becomes</i></span><span class="l"><i>a <em>river</em> in February.</i></span></h2><p>North-facing, the ad says. It does not say what the driveway does in a highveld storm. I have watched it do it for thirty-seven summers.</p></div></section>
   <section class="beat" data-i="3"><div class="box"><div class="k">Schools</div><h2><span class="l"><i>The school takes</i></span><span class="l"><i>children from <em>this</em> side.</i></span><span class="l"><i>Not that one.</i></span></h2><p>Catchment on paper and catchment in practice are two different maps. I know both. I sold half these houses to the parents.</p></div></section>
@@ -24,6 +24,10 @@ import Base from '../layouts/Base.astro';
 </script>
 </Base>
 <style is:global>
+ #ld .w{text-align:center;max-width:36rem;padding:0 1.5rem}
+#ld .s1{margin-top:1.2rem;font-size:clamp(1.1rem,2vw,1.5rem);line-height:1.35;letter-spacing:-.01em;font-weight:500;opacity:0;transform:translateY(8px)}
+#ld .s2{margin-top:.6rem;font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:clamp(1.2rem,2.2vw,1.7rem);line-height:1.3;color:var(--tq-d);opacity:0;transform:translateY(8px)}
+
 
 .it{font-family:Newsreader,serif;font-style:italic;font-weight:300}
 #gl{position:fixed;inset:0;z-index:0}
