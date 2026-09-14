@@ -1,9 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Sixteen Saturdays — selling with Spencer Morby" description="Set the asking price and watch who stops. What Spencer Morby tells sellers in Randpark Ridge, Weltevreden Park and Sundowner." journey="selling">
+<Base title="Selling your home in Randpark Ridge, Weltevreden Park or Sundowner — estate agent Spencer Morby" description="Set the asking price and watch who stops. What Spencer Morby tells sellers in Randpark Ridge, Weltevreden Park and Sundowner." journey="selling">
 <canvas id="gl"></canvas><div class="grain"></div>
-<div id="ld"><div><div class="n" id="ldn">0</div><div class="s">Saturdays</div></div><div class="bar" id="ldb"></div></div>
+<div id="ld"><div class="w"><div class="n" id="ldn">16</div><p class="s1">Saturdays. That is how long a house gets a buyer’s attention.</p><p class="s2">Spencer Morby, estate agent. Let us park outside yours.</p></div><div class="bar" id="ldb"></div></div>
 <div class="hint"><span>Scroll for what I tell sellers</span><i></i></div>
 <div class="hud"><div class="sat" id="sat">1</div><div class="lab">of sixteen Saturdays</div><div class="row"><span>Drove past</span><b id="passed">0</b><span>Stopped to look</span><b id="stopped">0</b><span>Made an offer</span><b id="offers">0</b></div></div>
 
@@ -27,6 +27,10 @@ import Base from '../layouts/Base.astro';
 </script>
 </Base>
 <style is:global>
+ #ld .w{text-align:center;max-width:36rem;padding:0 1.5rem}
+#ld .s1{margin-top:1.2rem;font-size:clamp(1.1rem,2vw,1.5rem);line-height:1.35;letter-spacing:-.01em;font-weight:500;opacity:0;transform:translateY(8px)}
+#ld .s2{margin-top:.6rem;font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:clamp(1.2rem,2.2vw,1.7rem);line-height:1.3;color:var(--tq-d);opacity:0;transform:translateY(8px)}
+
 .hint{position:fixed;left:50%;bottom:1.6rem;transform:translateX(-50%);z-index:30;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;pointer-events:none}
 .hint i{width:1px;height:2.2rem;background:var(--ink);display:block;transform-origin:top;animation:hint 1.8s cubic-bezier(.7,0,.2,1) infinite}
 @keyframes hint{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
