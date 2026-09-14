@@ -62,7 +62,8 @@ const prev=(document.cookie.match(/morb7_journey=(\w+)/)||[])[1];
 /* loader */
 const n={v:0};const tl=gsap.timeline({onComplete:()=>document.getElementById('ld').remove()})
  .to('#ldb',{scaleX:1,duration:1.4,ease:'power2.inOut'},0).to(n,{v:37,duration:1.4,ease:'power2.inOut',onUpdate:()=>document.getElementById('ldn').textContent=Math.round(n.v)},0)
- .to('#ld',{yPercent:-100,duration:1,ease:'power4.inOut'},'+=.25')
+ .to('#ld .s1',{opacity:1,y:0,duration:.6,ease:'power3.out'},'-=.5').to('#ld .s2',{opacity:1,y:0,duration:.6,ease:'power3.out'},'-=.3')
+ .to('#ld',{yPercent:-100,duration:1,ease:'power4.inOut'},'+=1.3')
  .to('.q',{opacity:1,duration:1,ease:'power3.out'},'-=.4').to(['.road','.mid','nav'],{opacity:1,duration:.8,stagger:.1},'-=.6');
 if(prev){tl.to('#back',{opacity:1,y:0,transform:'translate(-50%,0)',duration:.8,ease:'power3.out'},'-=.2');document.getElementById('backTxt').textContent=`Welcome back. Last time you were ${prev}.`;
  document.getElementById('backGo').onclick=()=>(prev==='buying'?L:Rr).click();document.getElementById('backSwitch').onclick=e=>{e.preventDefault();(prev==='buying'?Rr:L).click()}}
