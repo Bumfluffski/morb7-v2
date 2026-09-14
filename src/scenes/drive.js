@@ -128,7 +128,8 @@ const n={v:0};const ldn=document.getElementById('ldn');
 gsap.timeline({onComplete:()=>document.getElementById('ld').remove()})
  .to('#ldb',{scaleX:1,duration:1.6,ease:'power2.inOut'},0)
  .to(n,{v:37,duration:1.6,ease:'power2.inOut',onUpdate:()=>ldn.textContent=Math.round(n.v)},0)
- .to('#ld',{yPercent:-100,duration:1,ease:'power4.inOut'},'+=.25')
+ .to('#ld .s1',{opacity:1,y:0,duration:.6,ease:'power3.out'},'-=.5').to('#ld .s2',{opacity:1,y:0,duration:.6,ease:'power3.out'},'-=.3')
+ .to('#ld',{yPercent:-100,duration:1,ease:'power4.inOut'},'+=1.3')
  .to('#b0 h1 .l i',{y:0,duration:1.1,stagger:.12,ease:'power4.out'},'-=.55')
  .to(['nav','.rail','#b0 .who','.hint','#driveon'],{opacity:1,duration:.8,stagger:.05},'-=.5');
 
